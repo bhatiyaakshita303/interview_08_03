@@ -11,7 +11,7 @@ function Dashboard() {
 
     const fetchProjects = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/projects", {
+            const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/projects`, {
                 headers: { Authorization: token }
             });
             setProjects(res.data);
@@ -33,7 +33,7 @@ function Dashboard() {
                 return;
             }
             const res = await axios.post(
-                "http://localhost:5000/projects",
+                `${process.env.REACT_APP_BACKEND_URL}/projects`,
                 { name },
                 { headers: { Authorization: token } }
             );
@@ -50,7 +50,7 @@ function Dashboard() {
         if (!window.confirm("Are you sure you want to delete this project?")) return;
 
         try {
-            await axios.delete(`http://localhost:5000/projects/${id}`, {
+            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/projects/${id}`, {
                 headers: { Authorization: token }
             });
             setProjects(projects.filter(p => p._id !== id));
@@ -67,7 +67,7 @@ function Dashboard() {
 
         try {
             const res = await axios.put(
-                `http://localhost:5000/projects/${project._id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/projects/${project._id}`,
                 { name: newName },
                 { headers: { Authorization: token } }
             );

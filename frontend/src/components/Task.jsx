@@ -11,7 +11,7 @@ function Tasks() {
 
     const fetchTasks = useCallback(async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/tasks/${id}`, {
+            const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/tasks/${id}`, {
                 headers: { Authorization: token }
             });
             setTasks(res.data);
@@ -34,7 +34,7 @@ function Tasks() {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/tasks",
+                `${process.env.REACT_APP_BACKEND_URL}/tasks`,
                 { title, projectId: id, status },
                 { headers: { Authorization: token } }
             );
@@ -52,7 +52,7 @@ function Tasks() {
         if (!window.confirm("Are you sure you want to delete this task?")) return;
 
         try {
-            await axios.delete(`http://localhost:5000/tasks/${taskId}`, {
+            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/tasks/${taskId}`, {
                 headers: { Authorization: token }
             });
             setTasks(tasks.filter(t => t._id !== taskId));
@@ -69,7 +69,7 @@ function Tasks() {
 
         try {
             const res = await axios.put(
-                `http://localhost:5000/tasks/${task._id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/tasks/${task._id}`,
                 { title: newTitle },
                 { headers: { Authorization: token } }
             );
@@ -84,7 +84,7 @@ function Tasks() {
     const changeStatus = async (task, newStatus) => {
         try {
             const res = await axios.put(
-                `http://localhost:5000/tasks/${task._id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/tasks/${task._id}`,
                 { status: newStatus },
                 { headers: { Authorization: token } }
             );
