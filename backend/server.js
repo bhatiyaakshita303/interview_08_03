@@ -3,21 +3,24 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const PORT = process.env.PORT || 5000
+require('dotenv').config();
+const PORT = process.env.PORT || 5000;
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
 // MongoDB connect
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("MongoDB Connected")
-    })
-    .catch((err) => {
-        console.log("MongoDB Error:", err)
-    })
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI); // no options needed
+        console.log("MongoDB Connected");
+    } catch (err) {
+        console.log("MongoDB Error:", err.message);
+    }
+};
 
+connectDB();
 // USER MODEL
 
 const User = mongoose.model("User", {
