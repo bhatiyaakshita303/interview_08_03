@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,11 +9,7 @@ function Dashboard() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    const fetchProjects = async () => {
+    const fetchProjects = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/projects", {
                 headers: { Authorization: token }
@@ -23,7 +19,11 @@ function Dashboard() {
             console.log(err);
             alert("Failed to fetch projects");
         }
-    };
+    }, [token]);
+
+    useEffect(() => {
+        fetchProjects();
+    }, [fetchProjects]);
 
     // Create new project
     const createProject = async () => {

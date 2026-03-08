@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -9,11 +9,7 @@ function Tasks() {
     const [status, setStatus] = useState("Todo");
     const token = localStorage.getItem("token");
 
-    useEffect(() => {
-        fetchTasks();
-    }, []);
-
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         try {
             const res = await axios.get(`http://localhost:5000/tasks/${id}`, {
                 headers: { Authorization: token }
@@ -23,7 +19,11 @@ function Tasks() {
             console.log(err);
             alert("Failed to fetch tasks");
         }
-    };
+    }, [id, token]);
+
+    useEffect(() => {
+        fetchTasks();
+    }, [fetchTasks]);
 
     // Create new task
     const createTask = async () => {
