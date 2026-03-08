@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Build / output folders
+dist/
+build/
+.next/
+.cache/
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# Mac system files
+.DS_Store
