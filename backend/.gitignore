@@ -17,5 +17,6 @@ build/
 .vscode/
 .idea/
 
+.env
 # Mac system files
 .DS_Store
